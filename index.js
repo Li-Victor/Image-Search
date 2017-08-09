@@ -8,8 +8,11 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//middleware for static pages
+app.use('/', express.static(__dirname + '/public'));
+
 app.get('/', function(req, res, next) {
-	return res.status(200).send('this would be the homepage');
+	return res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/api', searchController.search);
