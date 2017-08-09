@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var searchController = require('./search/searchController');
 
 var app = express();
 app.use(bodyParser.json());
@@ -9,9 +10,7 @@ app.get('/', function(req, res, next) {
 	return res.status(200).send('this would be the homepage');
 });
 
-app.get('/api', function(req, res, next) {
-	return res.status(200).send('search text here');
-});
+app.get('/api', searchController.search);
 
 app.get('/latest', function(req, res, next) {
 	return res.status(200).send('latest');
