@@ -14,9 +14,7 @@ app.get('/', function(req, res, next) {
 
 app.get('/api', searchController.search);
 
-app.get('/latest', function(req, res, next) {
-	return res.status(200).send('latest');
-});
+app.get('/latest', searchController.latest);
 
 app.all('*', function(req, res, next) {
 	return res.status(404).send({

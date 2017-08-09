@@ -63,6 +63,32 @@ module.exports = {
             }
 
         }
+    },
+
+    latest: function (req, res, next) {
+
+        var db = req.app.get('db');
+        db.getLatestSearch()
+            .then((logs) => {
+
+                var arr = [];
+
+                logs.forEach(function (log) {
+                    arr.push({
+                        term: log.searchtext,
+                        when: log.searchtimestamp
+                    });
+
+                });
+
+                return res.status(200).send(arr);
+            })
+            .catch((err) => {
+                return res.status(404).send({
+                    error: 'Error with DB'
+                });
+            });
+
     }
 
 }
