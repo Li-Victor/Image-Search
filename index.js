@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var searchController = require('./search/searchController');
+var massive = require('massive');
+var secret = require('./secret');
 
 var app = express();
 app.use(bodyParser.json());
@@ -23,6 +25,12 @@ app.all('*', function(req, res, next) {
 });
 
 var port = 3000;
-app.listen(port, function() {
-	console.log('Listening on port ' + port);
-});
+
+massive(secret.DBconnection)
+	.then(db => {
+		app.set('db', db);
+
+		app.listen(port, function() {
+			console.log('Listening on port ' + port);
+		});
+	});
