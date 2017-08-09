@@ -15,7 +15,7 @@ app.get('/', function(req, res, next) {
 	return res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/api', searchController.search);
+app.get('/api/:text', searchController.search);
 
 app.get('/latest', searchController.latest);
 

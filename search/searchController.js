@@ -36,13 +36,13 @@ function insertSearchLog(db, searchText, timestamp, res, buildURLSearch) {
 module.exports = {
 
     search: function (req, res, next) {
-        if(!req.query.text) {
+        if(!req.params.text) {
             next();
         } else {
 
             var db = req.app.get('db');
             var timestamp = (new Date(Date.now())).toISOString();
-            var searchText = req.query.text;
+            var searchText = req.params.text;
 
             var buildURLSearch = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&per_page=10&nojsoncallback=1'
                 + '&api_key=' + secret.flickrAPIKey + '&text=' + searchText;
