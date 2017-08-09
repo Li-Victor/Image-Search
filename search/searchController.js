@@ -5,7 +5,6 @@ function fetchData(URLSearch, res) {
     fetch(URLSearch).then(function (data) {
         return data.json();
     }).then(function (json) {
-
         var arr = [];
 
         json.photos.photo.forEach(function (photoInfo) {
@@ -20,14 +19,16 @@ function fetchData(URLSearch, res) {
     })
 }
 
-function insertSearchLog(db, searchText, timestamp, res) {
+function insertSearchLog(db, searchText, timestamp, res, buildURLSearch) {
     db.newSearchLog([searchText, timestamp])
         .then(() => {
-            return res.status(200).send('this works');
+
+            fetchData(buildURLSearch, res);
+
         })
         .catch((err) => {
             return res.status(404).send({
-                error: err
+                error: 'Error with DB'
             });
         });
 }
@@ -43,35 +44,23 @@ module.exports = {
             var timestamp = (new Date(Date.now())).toISOString();
             var searchText = req.query.text;
 
+            var buildURLSearch = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&per_page=10&nojsoncallback=1'
+                + '&api_key=' + secret.flickrAPIKey + '&text=' + searchText;
+
             if(req.query.offset || req.query.offset === '') {
 
                 //req.query.offset should just be digits
                 if(req.query.offset.match(/^\d+$/)) {
 
-                    insertSearchLog(db, searchText, timestamp, res);
+                    buildURLSearch = buildURLSearch + '&page=' + Number(req.query.offset);
+                    insertSearchLog(db, searchText, timestamp, res, buildURLSearch);
                 } else {
                     next();
                 }
 
             } else {
-                insertSearchLog(db, searchText, timestamp, res);
+                insertSearchLog(db, searchText, timestamp, res, buildURLSearch);
             }
-
-
-
-            // var buildURLSearch = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&per_page=10&nojsoncallback=1'
-            //     + '&api_key=' + secret.flickrAPIKey + '&text=' + searchText;
-            //
-            // if(req.query.offset || req.query.offset === '') {
-            //     if(req.query.offset.match(/^\d+$/)) {
-            //         buildURLSearch = buildURLSearch + '&page=' + Number(req.query.offset);
-            //         fetchData(buildURLSearch, res);
-            //     } else {
-            //         next();
-            //     }
-            // } else {
-            //     fetchData(buildURLSearch, res);
-            // }
 
         }
     }
