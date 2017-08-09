@@ -11,8 +11,19 @@
         <div class="container">
             <h1>Image Search Abstraction Layer</h1>
             <ul>
-                <li>Pass a /api/</li>
+                <li><p>Pass /api/<strong>TEXT</strong> as a parameter. </br>
+                This will retrieve a JSON response of image URLs, alt text, and page URLs relating to <strong>TEXT</strong>. </br>
+                Optional: append <strong>?offset=NUMBER</strong> to paginate <strong>NUMBER</strong> value responses.</p></li>
+
+                <li><p>Pass <strong>latest</strong> as a paramter. </br>
+                This will return a JSON response of the most recently submitted search images</p></li>
             </ul>
+
+            <h2>Example usage</h2>
+            <p>http://localhost:3000/api/<strong>cat</strong></p>
+            <p>http://localhost:3000/api/<strong>cat?offset=10</strong></p>
+            <p>http://locahost:3000/<strong>latest</strong></p>
+
         </div>
 
 
