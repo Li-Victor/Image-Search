@@ -1,4 +1,3 @@
-var secret = require('../secret');
 var fetch = require('node-fetch');
 
 function fetchData(URLSearch, res) {
@@ -45,7 +44,7 @@ module.exports = {
             var searchText = req.params.text;
 
             var buildURLSearch = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&per_page=10&nojsoncallback=1'
-                + '&api_key=' + secret.flickrAPIKey + '&text=' + searchText;
+                + '&api_key=' + process.env.FLICKR_API_KEY + '&text=' + searchText;
 
             if(req.query.offset || req.query.offset === '') {
 

@@ -1,25 +1,31 @@
 {
   "name": "image-search",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "search images uURLS by giving input search text and offset page number as a option",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
+  "dependencies": {
+    "express": "^4.15.3",
+    "body-parser": "^1.17.2",
+    "massive": "^3.1.0",
+    "node-fetch": "^1.7.2"
+  },
+  "engines": {
+    "node": "8.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Li-Victor/Image-Search.git"
   },
-  "author": "Victor Li",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Li-Victor/Image-Search/issues"
-  },
-  "homepage": "https://github.com/Li-Victor/Image-Search#readme",
-  "dependencies": {
-    "body-parser": "^1.17.2",
-    "express": "^4.15.4",
-    "massive": "^3.1.0",
-    "node-fetch": "^1.7.2"
-  }
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "glitch",
+    "express",
+    "Flickr",
+    "massive",
+    "photos"
+  ]
 }

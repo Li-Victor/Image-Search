@@ -2,7 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var searchController = require('./search/searchController');
 var massive = require('massive');
-var secret = require('./secret');
 
 var app = express();
 app.use(bodyParser.json());
@@ -21,13 +20,13 @@ app.get('/latest', searchController.latest);
 
 app.all('*', function(req, res, next) {
 	return res.status(404).send({
-		error: 'There has been an error with your search. Please follow the instructions on http://localhost:3000'
+		error: 'There has been an error with your search. Please follow the instructions on https://search-img.glitch.me/'
 	});
 });
 
 var port = 3000;
 
-massive(secret.DBconnection)
+massive(process.env.DB_CONNECTION)
 	.then(db => {
 		app.set('db', db);
 
